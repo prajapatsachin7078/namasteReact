@@ -15,7 +15,7 @@ const AppLayout = () => {
         try{
             const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5355161&lng=77.3910265&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
             const json = await data.json();
-            setResData(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+            setResData(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
             console.log(json);
         }catch(error) {
             console.log("Error in fetching data:", error);
