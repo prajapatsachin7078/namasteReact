@@ -2963,6 +2963,7 @@ var _s = $RefreshSig$();
 const AppLayout = ()=>{
     _s();
     const [resData, setResData] = (0, _react.useState)([]);
+    const [filteredData, setFilteredData] = (0, _react.useState)([]);
     (0, _react.useEffect)(()=>{
         fetchData();
     }, []);
@@ -2970,27 +2971,34 @@ const AppLayout = ()=>{
         try {
             const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5355161&lng=77.3910265&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
             const json = await data.json();
-            setResData(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-            console.log(json);
+            const restaurantsData = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+            setResData(restaurantsData);
+            setFilteredData(restaurantsData);
+        // console.log(json);
         } catch (error) {
             console.log("Error in fetching data:", error);
         }
     };
+    const filterData = (searchText)=>{
+        const filteredList = resData.filter((data)=>data.info.name.toLowerCase().includes(searchText.toLowerCase()));
+        setFilteredData(filteredList);
+        console.log(filteredList.length);
+        console.log("Data filtered");
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "container",
         children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _header.Header), {}, void 0, false, {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _header.Header), {
+                filterData: filterData
+            }, void 0, false, {
                 fileName: "IgniteOurApp/App.js",
-                lineNumber: 26,
+                lineNumber: 38,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "d-flex justify-content-center mb-3 ",
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                    className: "text-secondary border-2 border-warning rounded px-2 py-1 mb-2",
-                    style: {
-                        background: "linear-gradient(to right, #ff5f6d, #ffc371)"
-                    },
+                    className: "btn btn-outline-secondary",
                     onClick: ()=>{
                         let updatedList = resData.filter((data)=>data.info.avgRating > 4);
                         setResData(updatedList);
@@ -2998,40 +3006,40 @@ const AppLayout = ()=>{
                     children: "Click here to filter for top-rated restaurants"
                 }, void 0, false, {
                     fileName: "IgniteOurApp/App.js",
-                    lineNumber: 28,
+                    lineNumber: 40,
                     columnNumber: 17
                 }, undefined)
             }, void 0, false, {
                 fileName: "IgniteOurApp/App.js",
-                lineNumber: 27,
+                lineNumber: 39,
                 columnNumber: 13
             }, undefined),
-            resData.length == 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+            filteredData.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
                 children: "Loading Data"
             }, void 0, false, {
                 fileName: "IgniteOurApp/App.js",
-                lineNumber: 33,
-                columnNumber: 34
+                lineNumber: 45,
+                columnNumber: 42
             }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardContainer.CardContainer), {
-                result: resData
+                result: filteredData
             }, void 0, false, {
                 fileName: "IgniteOurApp/App.js",
-                lineNumber: 33,
-                columnNumber: 56
+                lineNumber: 45,
+                columnNumber: 66
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "IgniteOurApp/App.js",
-        lineNumber: 25,
+        lineNumber: 37,
         columnNumber: 9
     }, undefined);
 };
-_s(AppLayout, "6BNzLi1jqD4aYB5LnfmfIion4Ts=");
+_s(AppLayout, "2pVkn0kY6asyF15vYohpNHufKCA=");
 _c = AppLayout;
 const root = (0, _clientDefault.default).createRoot(document.getElementById("root"));
 root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(AppLayout, {}, void 0, false, {
     fileName: "IgniteOurApp/App.js",
-    lineNumber: 39,
+    lineNumber: 51,
     columnNumber: 13
 }, undefined));
 var _c;
@@ -27409,187 +27417,212 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Header", ()=>Header);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _constants = require("../utils/constants");
-const Header = ()=>{
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("nav", {
-            className: "navbar navbar-expand-lg bg-body-tertiary",
-            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "container-fluid",
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
-                        className: "navbar-brand text-success",
-                        href: "#",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: (0, _constants.logoURL),
-                                alt: "Logo",
-                                width: "80",
-                                className: " d-inline-block"
-                            }, void 0, false, {
-                                fileName: "IgniteOurApp/Components/Header.js",
-                                lineNumber: 8,
-                                columnNumber: 13
-                            }, undefined),
-                            "Food Court"
-                        ]
-                    }, void 0, true, {
-                        fileName: "IgniteOurApp/Components/Header.js",
-                        lineNumber: 7,
-                        columnNumber: 13
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                        className: "navbar-toggler",
-                        type: "button",
-                        "data-bs-toggle": "collapse",
-                        "data-bs-target": "#navbarSupportedContent",
-                        "aria-controls": "navbarSupportedContent",
-                        "aria-expanded": "false",
-                        "aria-label": "Toggle navigation",
-                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                            className: "navbar-toggler-icon"
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _s = $RefreshSig$();
+const Header = (props)=>{
+    _s();
+    const filterData = props.filterData;
+    const [logIN_OUT, setLogIN_OUT] = (0, _react.useState)("Log In");
+    const [searchText, setSearchText] = (0, _react.useState)("");
+    console.log(searchText);
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("nav", {
+        className: " navbar  navbar-expand-lg bg-body-tertiary",
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            className: "container-fluid",
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
+                    className: "navbar-brand text-success",
+                    href: "#",
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                            src: (0, _constants.logoURL),
+                            alt: "Logo",
+                            width: "80",
+                            className: " d-inline-block rounded-circle me-2"
                         }, void 0, false, {
                             fileName: "IgniteOurApp/Components/Header.js",
                             lineNumber: 12,
                             columnNumber: 13
-                        }, undefined)
+                        }, undefined),
+                        "Food Court"
+                    ]
+                }, void 0, true, {
+                    fileName: "IgniteOurApp/Components/Header.js",
+                    lineNumber: 11,
+                    columnNumber: 13
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                    className: "navbar-toggler",
+                    type: "button",
+                    "data-bs-toggle": "collapse",
+                    "data-bs-target": "#navbarSupportedContent",
+                    "aria-controls": "navbarSupportedContent",
+                    "aria-expanded": "false",
+                    "aria-label": "Toggle navigation",
+                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                        className: "navbar-toggler-icon"
                     }, void 0, false, {
                         fileName: "IgniteOurApp/Components/Header.js",
-                        lineNumber: 11,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "collapse navbar-collapse",
-                        id: "navbarSupportedContent",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
-                                className: "navbar-nav me-auto mb-2 mb-lg-0",
-                                children: [
-                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                                        className: "nav-item",
-                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
-                                            className: "nav-link active",
-                                            "aria-current": "page",
-                                            href: "#",
-                                            children: "Home"
-                                        }, void 0, false, {
-                                            fileName: "IgniteOurApp/Components/Header.js",
-                                            lineNumber: 17,
-                                            columnNumber: 17
-                                        }, undefined)
+                        lineNumber: 16,
+                        columnNumber: 13
+                    }, undefined)
+                }, void 0, false, {
+                    fileName: "IgniteOurApp/Components/Header.js",
+                    lineNumber: 15,
+                    columnNumber: 11
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                    className: "collapse navbar-collapse",
+                    id: "navbarSupportedContent",
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
+                            className: "navbar-nav me-auto mb-2 mb-lg-0",
+                            children: [
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                    className: "nav-item",
+                                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
+                                        className: "nav-link active",
+                                        "aria-current": "page",
+                                        href: "#",
+                                        children: "Home"
                                     }, void 0, false, {
                                         fileName: "IgniteOurApp/Components/Header.js",
-                                        lineNumber: 16,
-                                        columnNumber: 15
-                                    }, undefined),
-                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                                        className: "nav-item",
-                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
-                                            className: "nav-link active",
-                                            "aria-current": "page",
-                                            href: "#",
-                                            children: "About"
-                                        }, void 0, false, {
-                                            fileName: "IgniteOurApp/Components/Header.js",
-                                            lineNumber: 20,
-                                            columnNumber: 17
-                                        }, undefined)
-                                    }, void 0, false, {
-                                        fileName: "IgniteOurApp/Components/Header.js",
-                                        lineNumber: 19,
-                                        columnNumber: 15
-                                    }, undefined),
-                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                                        className: "nav-item",
-                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
-                                            className: "nav-link active",
-                                            "aria-current": "page",
-                                            href: "#",
-                                            children: "Contact Us"
-                                        }, void 0, false, {
-                                            fileName: "IgniteOurApp/Components/Header.js",
-                                            lineNumber: 23,
-                                            columnNumber: 17
-                                        }, undefined)
-                                    }, void 0, false, {
-                                        fileName: "IgniteOurApp/Components/Header.js",
-                                        lineNumber: 22,
-                                        columnNumber: 15
-                                    }, undefined),
-                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                                        className: "nav-item",
-                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
-                                            className: "nav-link active",
-                                            "aria-current": "page",
-                                            href: "#",
-                                            children: "Cart"
-                                        }, void 0, false, {
-                                            fileName: "IgniteOurApp/Components/Header.js",
-                                            lineNumber: 26,
-                                            columnNumber: 17
-                                        }, undefined)
-                                    }, void 0, false, {
-                                        fileName: "IgniteOurApp/Components/Header.js",
-                                        lineNumber: 25,
-                                        columnNumber: 15
+                                        lineNumber: 21,
+                                        columnNumber: 17
                                     }, undefined)
-                                ]
-                            }, void 0, true, {
-                                fileName: "IgniteOurApp/Components/Header.js",
-                                lineNumber: 15,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
-                                className: "d-flex",
-                                role: "search",
-                                children: [
-                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                                        className: "form-control  me-2",
-                                        type: "search",
-                                        placeholder: "Search",
-                                        "aria-label": "Search"
+                                }, void 0, false, {
+                                    fileName: "IgniteOurApp/Components/Header.js",
+                                    lineNumber: 20,
+                                    columnNumber: 15
+                                }, undefined),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                    className: "nav-item",
+                                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
+                                        className: "nav-link active",
+                                        "aria-current": "page",
+                                        href: "#",
+                                        children: "About"
+                                    }, void 0, false, {
+                                        fileName: "IgniteOurApp/Components/Header.js",
+                                        lineNumber: 24,
+                                        columnNumber: 17
+                                    }, undefined)
+                                }, void 0, false, {
+                                    fileName: "IgniteOurApp/Components/Header.js",
+                                    lineNumber: 23,
+                                    columnNumber: 15
+                                }, undefined),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                    className: "nav-item",
+                                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
+                                        className: "nav-link active",
+                                        "aria-current": "page",
+                                        href: "#",
+                                        children: "Contact Us"
+                                    }, void 0, false, {
+                                        fileName: "IgniteOurApp/Components/Header.js",
+                                        lineNumber: 27,
+                                        columnNumber: 17
+                                    }, undefined)
+                                }, void 0, false, {
+                                    fileName: "IgniteOurApp/Components/Header.js",
+                                    lineNumber: 26,
+                                    columnNumber: 15
+                                }, undefined),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                    className: "nav-item",
+                                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
+                                        className: "nav-link active",
+                                        "aria-current": "page",
+                                        href: "#",
+                                        children: "Cart"
                                     }, void 0, false, {
                                         fileName: "IgniteOurApp/Components/Header.js",
                                         lineNumber: 30,
-                                        columnNumber: 15
-                                    }, undefined),
-                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                                        className: "btn btn-outline-success",
-                                        type: "submit",
-                                        children: "Search"
-                                    }, void 0, false, {
-                                        fileName: "IgniteOurApp/Components/Header.js",
-                                        lineNumber: 31,
-                                        columnNumber: 15
+                                        columnNumber: 17
                                     }, undefined)
-                                ]
-                            }, void 0, true, {
-                                fileName: "IgniteOurApp/Components/Header.js",
-                                lineNumber: 29,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
-                        fileName: "IgniteOurApp/Components/Header.js",
-                        lineNumber: 14,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "IgniteOurApp/Components/Header.js",
-                lineNumber: 6,
-                columnNumber: 9
-            }, undefined)
-        }, void 0, false, {
+                                }, void 0, false, {
+                                    fileName: "IgniteOurApp/Components/Header.js",
+                                    lineNumber: 29,
+                                    columnNumber: 15
+                                }, undefined)
+                            ]
+                        }, void 0, true, {
+                            fileName: "IgniteOurApp/Components/Header.js",
+                            lineNumber: 19,
+                            columnNumber: 13
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
+                            className: "d-flex",
+                            role: "search",
+                            children: [
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                    className: "form-control  me-2",
+                                    type: "search",
+                                    placeholder: "Search",
+                                    "aria-label": "Search",
+                                    value: searchText,
+                                    onChange: (e)=>{
+                                        setSearchText(e.target.value);
+                                        filterData(searchText);
+                                    // console.log(searchText); 
+                                    }
+                                }, void 0, false, {
+                                    fileName: "IgniteOurApp/Components/Header.js",
+                                    lineNumber: 34,
+                                    columnNumber: 15
+                                }, undefined),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                                    className: "btn btn-outline-success",
+                                    type: "submit",
+                                    onClick: (e)=>{
+                                        e.preventDefault();
+                                        filterData(searchText);
+                                    },
+                                    children: "Search"
+                                }, void 0, false, {
+                                    fileName: "IgniteOurApp/Components/Header.js",
+                                    lineNumber: 39,
+                                    columnNumber: 15
+                                }, undefined)
+                            ]
+                        }, void 0, true, {
+                            fileName: "IgniteOurApp/Components/Header.js",
+                            lineNumber: 33,
+                            columnNumber: 13
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                            className: "ms-2 btn btn-outline-info",
+                            type: "submit",
+                            onClick: ()=>{
+                                setLogIN_OUT(logIN_OUT === "Log In" ? "Log Out" : "Log In");
+                            },
+                            children: logIN_OUT
+                        }, void 0, false, {
+                            fileName: "IgniteOurApp/Components/Header.js",
+                            lineNumber: 44,
+                            columnNumber: 13
+                        }, undefined)
+                    ]
+                }, void 0, true, {
+                    fileName: "IgniteOurApp/Components/Header.js",
+                    lineNumber: 18,
+                    columnNumber: 11
+                }, undefined)
+            ]
+        }, void 0, true, {
             fileName: "IgniteOurApp/Components/Header.js",
-            lineNumber: 5,
+            lineNumber: 10,
             columnNumber: 9
         }, undefined)
     }, void 0, false, {
         fileName: "IgniteOurApp/Components/Header.js",
-        lineNumber: 4,
-        columnNumber: 8
+        lineNumber: 9,
+        columnNumber: 9
     }, undefined);
 };
+_s(Header, "1puuq+vaE4EPzSi0FvzoweZSs3o=");
 _c = Header;
 var _c;
 $RefreshReg$(_c, "Header");
@@ -27599,7 +27632,7 @@ $RefreshReg$(_c, "Header");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../utils/constants":"cvFDM"}],"cvFDM":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../utils/constants":"cvFDM","react":"21dqq"}],"cvFDM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "apiURL", ()=>apiURL);
@@ -27624,7 +27657,7 @@ const CardContainer = ({ result })=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "container d-flex justify-content-center align-items-center",
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-            className: "row justify-content-center gap-5",
+            className: "row justify-content-center gap-2",
             children: result.map((item, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _itemCard.ItemCard), {
                     item: item.info
                 }, index, false, {
@@ -27668,7 +27701,7 @@ const ItemCard = (props)=>{
     const { slaString } = sla;
     const truncatedCuisines = cuisines.slice(0, 4);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        className: "card col-3",
+        className: "card col-3 scale-75 scale-75 card-hover-effect",
         style: {
             width: "13em"
         },
@@ -27682,12 +27715,12 @@ const ItemCard = (props)=>{
                 }, void 0, false, {
                     fileName: "IgniteOurApp/Components/ItemCard.js",
                     lineNumber: 8,
-                    columnNumber: 13
+                    columnNumber: 17
                 }, undefined)
             }, void 0, false, {
                 fileName: "IgniteOurApp/Components/ItemCard.js",
                 lineNumber: 7,
-                columnNumber: 9
+                columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "card-body",
@@ -27698,7 +27731,7 @@ const ItemCard = (props)=>{
                     }, void 0, false, {
                         fileName: "IgniteOurApp/Components/ItemCard.js",
                         lineNumber: 11,
-                        columnNumber: 13
+                        columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                         className: "card-text",
@@ -27706,7 +27739,7 @@ const ItemCard = (props)=>{
                     }, void 0, false, {
                         fileName: "IgniteOurApp/Components/ItemCard.js",
                         lineNumber: 12,
-                        columnNumber: 13
+                        columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                         className: "card-text",
@@ -27717,7 +27750,7 @@ const ItemCard = (props)=>{
                     }, void 0, true, {
                         fileName: "IgniteOurApp/Components/ItemCard.js",
                         lineNumber: 13,
-                        columnNumber: 13
+                        columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                         className: "card-text",
@@ -27728,13 +27761,13 @@ const ItemCard = (props)=>{
                     }, void 0, true, {
                         fileName: "IgniteOurApp/Components/ItemCard.js",
                         lineNumber: 14,
-                        columnNumber: 13
+                        columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "IgniteOurApp/Components/ItemCard.js",
                 lineNumber: 10,
-                columnNumber: 9
+                columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {

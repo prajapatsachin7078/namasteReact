@@ -1,11 +1,15 @@
 import { logoURL } from "../utils/constants";
-export const Header = () => {
+import React, { useState, useEffect } from "react";
+export const Header = (props) => {
+  const filterData = props.filterData;
+  const [logIN_OUT,setLogIN_OUT] = useState('Log In');
+  const [searchText, setSearchText] = useState('');
+  console.log(searchText)
     return (
-       <div>
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav className=" navbar  navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
             <a className="navbar-brand text-success" href="#">
-            <img src={logoURL} alt="Logo" width="80" className=" d-inline-block"/>
+            <img src={logoURL} alt="Logo" width="80" className=" d-inline-block rounded-circle me-2"/>
             Food Court
             </a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,12 +31,25 @@ export const Header = () => {
               </li>
             </ul>
             <form className="d-flex" role="search">
-              <input className="form-control  me-2" type="search" placeholder="Search" aria-label="Search"/>
-              <button className="btn btn-outline-success" type="submit">Search</button>
+              <input className="form-control  me-2" type="search" placeholder="Search" aria-label="Search" value = {searchText} onChange={(e)=>{
+                setSearchText(e.target.value);
+                filterData(searchText);
+                // console.log(searchText); 
+              }}/>
+              <button className="btn btn-outline-success" type="submit" onClick={(e)=>{
+                e.preventDefault();
+                filterData(searchText);
+              }}>Search</button>
             </form>
+            <button className="ms-2 btn btn-outline-info" type="submit"
+              onClick={
+                ()=>{
+                  setLogIN_OUT(logIN_OUT === 'Log In'?'Log Out':'Log In');
+                }
+              }
+            >{logIN_OUT}</button>
           </div>
         </div>
       </nav>
-       </div>
     );
 };
