@@ -1,3 +1,4 @@
 /node_modules
 /IgniteOurApp/dist
 /.parcel-cache
+/dist

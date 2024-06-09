@@ -1,9 +1,0 @@
-.card-hover-effect {
-  transition: transform .2s ease-in-out;
-}
-
-.card-hover-effect:hover {
-  cursor: pointer;
-  transform: scale(1.05);
-}
-/*# sourceMappingURL=index.fa65d0e8.css.map */

@@ -1,51 +1,55 @@
-import React, { useState, useEffect } from "react";
+
 import ReactDOM from "react-dom/client";
-import { Header } from "./Components/Header";
-import { CardContainer } from "./Components/CardContainer";
-
+import { createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterProvider } from "react-router-dom";
+import About from "./Components/About";
+import Contact from "./Components/Contact";
+import Error from "./Components/Error";
+import {Header} from "./Components/Header"
+import Body from "./Components/Body"
+import Footer from "./Components/Footer";
+import Restaurant from "./Components/Restaurant";
 const AppLayout = () => {
-    const [resData, setResData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-        try {
-            const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5355161&lng=77.3910265&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
-            const json = await data.json();
-
-            const restaurantsData = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-
-            setResData(restaurantsData);
-            setFilteredData(restaurantsData);
-            // console.log(json);
-        } catch (error) {
-            console.log("Error in fetching data:", error);
-        }
-    }
-
-    const filterData = (searchText) => {
-        const filteredList = resData.filter(data => data.info.name.toLowerCase().includes(searchText.toLowerCase()));
-        setFilteredData(filteredList);
-        console.log(filteredList.length)
-        console.log("Data filtered");
-    }
-
     return (
         <div className="container">
-            <Header filterData={filterData} />
-            <div className="d-flex justify-content-center mb-3 ">
-                <button className="btn btn-outline-secondary" onClick={() => {
-                    let updatedList = resData.filter((data) => data.info.avgRating > 4);
-                    setResData(updatedList);
-                }}>Click here to filter for top-rated restaurants</button>
-            </div>
-            {filteredData.length === 0 ? <h1>Loading Data</h1> : <CardContainer result={filteredData} />}
+            <Header />
+            <Outlet />
+            <Footer />
         </div>
     );
 };
 
+// const appRouter = createBrowserRouter([
+//     {
+//         path: "/",
+//         element: <AppLayout/>,
+//         children:[
+//             {
+//                 path: "/",
+//                 element: <Body />,
+//             },
+//             {
+//                 path: "/about",
+//                 element: <About/>,
+//             },
+//             {
+//                 path: "/contact",
+//                 element: <Contact/>,
+//             }
+//         ],
+//         errorElement: <Error/>,
+//     },
+// ]);
+
+const appRouter = createBrowserRouter(
+    createRoutesFromElements(
+        <Route path="/" element ={<AppLayout/>} errorElement ={<Error/>}>
+            <Route path="" element ={<Body />}/>
+            <Route path="/about" element ={<About />}/>
+            <Route path="/contact" element ={<Contact />}/>
+            <Route path="/restaurant/:resId" element ={<Restaurant />}/>
+        </Route>
+    )
+)
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<AppLayout />);
+root.render(<RouterProvider router={appRouter} />);
