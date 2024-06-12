@@ -37,7 +37,7 @@ const Body = () => {
 
     const fetchData = async () => {
         try {
-            const data = await fetch('https://proxy.cors.sh/https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5355161&lng=77.3910265&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
+            const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6691565&lng=77.45375779999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
             const json = await data.json();
 
             const restaurantsData = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
@@ -65,7 +65,7 @@ const Body = () => {
                     }}>Search</button>
                 </form>
             </div>
-            {filteredData.length === 0 ? <ShimmerLoader/>: <CardContainer result={filteredData} />}
+            {filteredData.length === 0 ? <ShimmerLoader/>: <CardContainer result={filteredData} /> }
         </div>
     );
 };

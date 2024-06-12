@@ -19,7 +19,7 @@ export const Header = (props) => {
               <li className="nav-item">
               <NavLink 
                 className={({ isActive }) => 
-                  `nav-link active ${isActive ? "text-success" : "text-secondary"}`
+                  `nav-link active ${isActive ? "border-bottom border-danger text-danger" : "text-secondary"}`
                 } 
                 aria-current="page" 
                 to="/">Home
@@ -29,7 +29,7 @@ export const Header = (props) => {
               <li className="nav-item">
               <NavLink 
                 className={({ isActive }) => 
-                  `nav-link ${isActive ? "text-success" : "text-secondary"}`
+                  `nav-link ${isActive ? "border-bottom border-danger text-danger" : "text-secondary"}`
                 } 
                 aria-current="page" 
                 to="/about">About
@@ -38,7 +38,7 @@ export const Header = (props) => {
               </li>
               <li className="nav-item">
                 <NavLink  className={({ isActive }) => 
-                  `nav-link  ${isActive ? "text-success" : "text-secondary"}`
+                  `nav-link  ${isActive ? "border-bottom border-danger text-danger" : "text-secondary"}`
                 }  aria-current="page" to="/contact">Contact Us</NavLink>
               </li>
               <li className="nav-item">
