@@ -7,7 +7,7 @@ const Body = () => {
     const [searchText, setSearchText] = useState('');
     const [resData, setResData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
-    const [isFiltered,setIsFiltered] = useState(false);
+    const [isFiltered,setIsFiltered] = useState(true);
     // console.log(pruseOutlet());
     useEffect(() => {
         setTimeout(()=>{
@@ -16,8 +16,8 @@ const Body = () => {
     }, []);
 
     const filterTopRatedRestaurants = () => {
-        setFilteredData(prevData => {
-            if (isFiltered) {
+        setFilteredData(() => {
+            if (!isFiltered) {
                 return resData;
             } else {
                 return resData.filter(data => data.info.avgRating > 4);
@@ -27,17 +27,14 @@ const Body = () => {
         setIsFiltered(prevIsFiltered => !prevIsFiltered);
     };
     
-
     const filterData = (searchText) => {
         const filteredList = resData.filter(data => data.info.name.toLowerCase().includes(searchText.toLowerCase()));
         setFilteredData(filteredList);
-        console.log(filteredList.length)
-        console.log("Data filtered");
     }
 
     const fetchData = async () => {
         try {
-            const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6691565&lng=77.45375779999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
+            const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5355161&lng=77.3910265&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
             const json = await data.json();
 
             const restaurantsData = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
@@ -57,7 +54,6 @@ const Body = () => {
                     <input className="form-control  me-2" type="search" placeholder="Search" aria-label="Search" value = {searchText} onChange={(e)=>{
                         setSearchText(e.target.value);
                         filterData(searchText);
-                        // console.log(searchText); 
                     }}/>
                     <button className="btn btn-outline-success" type="submit" onClick={(e)=>{
                         e.preventDefault();
