@@ -1,72 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ShimmerLoader from "./ShimmerLoader";
 import { useParams } from "react-router-dom";
-import Error from "./Error";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 const Restaurant = () => {
-    const [resMenu, setResMenu] = useState(null);
-    const [resMenuInfo, setResMenuInfo] = useState(null);
-    const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState("All");
     const { resId } = useParams();
-
-    useEffect(() => {
-        fetchMenuData();
-    }, []);
-
-    const fetchMenuData = async () => {
-        try {
-            const response = await fetch(
-                "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.5355161&lng=77.3910265&restaurantId=" + resId
-            );
-            const json = await response.json();
-            const menuData = json?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-            let result = null;
-            let categorySet = new Set();
-            if (menuData) {
-                for (let i = 0; i < 18; i++) {
-                    if (menuData[i]?.card?.card?.itemCards !== undefined) {
-                        result = menuData[i].card.card;
-                        break; // Exit the loop once the first defined itemCards is found
-                    }
-                }
-            }
-
-            result?.itemCards.forEach((item) => {
-                categorySet.add(item.card.info.category);
-            });
-
-            setCategories(["All", ...Array.from(categorySet)]);
-            setResMenu(result);
-            setResMenuInfo(json?.data?.cards[2]?.card?.card?.info);
-            console.log(json?.data?.cards[2]?.card?.card?.info);
-        } catch (error) {
-            console.log("Error in fetching menu data:", error);
-        }
-    };
-
-    const handleCategoryChange = (e) => {
-        setSelectedCategory(e.target.value);
-    };
+    const [
+        resMenuInfo,
+        resMenu,
+        categories,
+        selectedCategory,
+        handleCategoryChange,
+        filteredItems
+    ] = useRestaurantMenu(resId);
 
     if (!resMenu && !resMenuInfo) {
         return <ShimmerLoader />;
     }
 
-    const filteredItems = selectedCategory === "All"
-        ? resMenu.itemCards
-        : resMenu.itemCards.filter(item => item.card.info.category === selectedCategory);
-
     return (
         <div className="container mt-5">
-            <div className="card">
-                {console.log()}
-            </div>
             {resMenuInfo && (
                 <div className="mb-4">
-                    <div style={{
-                        height: 250+"px",
-                    }} className="card  mb-3">
+                    <div style={{ height: "250px" }} className="card mb-3">
                         <div className="row g-0">
                             <div className="col-md-8">
                                 <div className="card-body">
@@ -78,20 +34,13 @@ const Restaurant = () => {
                                     <p className="card-text"><strong>Discount:</strong> {resMenuInfo.aggregatedDiscountInfo?.header}</p>
                                 </div>
                             </div>
-                            <div className="col-md-4 float-end" 
-                                style={{
-                                    height:250 + 'px',
-                                    objectFit: 'contain'
-                                }} 
-                            >
-                                    <img
-                                         style={{
-                                            height:250 + 'px'
-                                        }} 
-                                        src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/" +resMenuInfo.cloudinaryImageId}
-                                        className=" img-thumbnail float-end" 
-                                        alt={resMenuInfo.name} 
-                                    />
+                            <div className="col-md-4 float-end" style={{ height: "250px", objectFit: 'contain' }}>
+                                <img
+                                    style={{ height: "250px" }}
+                                    src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${resMenuInfo.cloudinaryImageId}`}
+                                    className="img-thumbnail float-end"
+                                    alt={resMenuInfo.name}
+                                />
                             </div>
                         </div>
                     </div>
@@ -106,29 +55,15 @@ const Restaurant = () => {
             </div>
             <div className="row">
                 {!filteredItems.length ? <h1>No items available in this category</h1> : filteredItems.map((item, index) => (
-                    <div className="col-12 mb-4"
-                    style={{
-                        height:250 + 'px',
-                        
-                    }} 
-                     key={index}>
+                    <div className="col-12 mb-4" style={{ height: "250px" }} key={index}>
                         <div className="card horizontal-card">
                             <div className="row g-0">
-                                <div className="col-md-4"
-                                    style={
-                                        {
-                                            objectFit: 'cover'
-                                        }
-                                    }
-                                >
-                                    <img 
-                                         style={{
-                                            height:250 + 'px',
-                                            width: 250 + 'px'
-                                        }} 
-                                        src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/" + item?.card?.info?.imageId}
-                                        className="img-fluid rounded-start" 
-                                        alt={item.card.info.name} 
+                                <div className="col-md-4" style={{ objectFit: 'cover' }}>
+                                    <img
+                                        style={{ height: "250px", width: "250px" }}
+                                        src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${item?.card?.info?.imageId}`}
+                                        className="img-fluid rounded-start"
+                                        alt={item.card.info.name}
                                     />
                                 </div>
                                 <div className="col-md-8">
