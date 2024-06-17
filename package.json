@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "one step towards learning for earning",
   "scripts": {
+    "vercel-build": "npm install && npm run build",
     "start": "parcel index.html",
     "build": "parcel build index.html",
     "test": "jest"
@@ -30,5 +31,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
     "react-shimmer-effects": "^1.0.3"
+  },
+  "optionalDependencies": {
+    "@parcel/watcher": "^2.0.0"
   }
 }
