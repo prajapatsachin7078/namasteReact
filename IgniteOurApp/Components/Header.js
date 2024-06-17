@@ -1,11 +1,14 @@
 import { logoURL } from "../utils/constants";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink,Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import SearchCityContext from "../utils/context/SearchCityContext";
 export const Header = (props) => {
-  const [logIN_OUT,setLogIN_OUT] = useState('Log In');
+  // const [logIN_OUT,setLogIN_OUT] = useState('Log In');
   const onlineStatus = useOnlineStatus();
+  const [city, setCity] = useState('');
+  const {handleCityNameUpdate} = useContext(SearchCityContext);
     return (
         <nav className=" navbar  navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
@@ -53,14 +56,25 @@ export const Header = (props) => {
                 Online Status : {onlineStatus ? "✅":"🔴"}
               </li>
             </ul>
-            
-            <button className="ms-2 btn btn-outline-success" type="submit"
+            <input
+                type="text"
+                className="w-25 form-control"
+                name=""
+                id=""
+                aria-describedby="helpId"
+                placeholder="Search city"
+                onChange={(e)=>{
+                  setCity(e.target.value);
+                  // console.log(e.target.value);
+                }}
+              />
+            <Link to="/"><button className="ms-2 btn btn-outline-success" type="submit"
               onClick={
                 ()=>{
-                  setLogIN_OUT(logIN_OUT === 'Log In'?'Log Out':'Log In');
+                  handleCityNameUpdate(city);
                 }
               }
-            >{logIN_OUT}</button>
+            >Search</button></Link>
           </div>
         </div>
       </nav>

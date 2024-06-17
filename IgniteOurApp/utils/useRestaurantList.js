@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 
-const useRestaurantList = ()=>{
+const useRestaurantList = (coordinates)=>{
     const [searchText, setSearchText] = useState('');
     const [resData, setResData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [isFiltered,setIsFiltered] = useState(true);
-    // console.log(pruseOutlet());
     useEffect(() => {
-        setTimeout(()=>{
-            fetchData();
-        },500);
-    }, []);
+        if(coordinates.lat && coordinates.lon){
+            setTimeout(()=>{
+                fetchData();
+            },500);
+        }
+        
+    },[coordinates]);
 
     const filterTopRatedRestaurants = () => {
         setFilteredData(() => {
@@ -31,13 +33,25 @@ const useRestaurantList = ()=>{
 
     const fetchData = async () => {
         try {
-            const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5355161&lng=77.3910265&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
+            const data = await fetch(`https://www.swiggy.com/dapi/restaurants/list/v5?lat=${coordinates.lat}&lng=${coordinates.lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`);
             const json = await data.json();
+            // console.log(json);
+            // console.log(coordinates)
 
-            const restaurantsData = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-
-            setResData(restaurantsData);
-            setFilteredData(restaurantsData);
+            let result = null;
+            const restaurantsData = json?.data?.cards;
+            // console.log(restaurantsData);
+            for(let i = 0;i<restaurantsData.length;i++){
+                
+                if(restaurantsData[i]?.card?.card?.gridElements?.infoWithStyle?.restaurants !== undefined){
+                    result = restaurantsData[i]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+                    // console.log(restaurantsData[i]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+                    break;
+                }
+            }
+            // console.log(result);
+            setResData(result);
+            setFilteredData(result);
             // console.log(json);
         } catch (error) {
             console.log("Error in fetching data:", error);

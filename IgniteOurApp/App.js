@@ -11,6 +11,7 @@ import Restaurant from "./Components/Restaurant";
 import ShimmerLoader from "./Components/ShimmerLoader";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import SearchCityContextProvider from "./utils/context/SearchCityContextProvider";
 
 
 // import Grocery from "./Components/Grocery";
@@ -63,4 +64,8 @@ const appRouter = createBrowserRouter(
 )
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<RouterProvider router={appRouter} />);
+root.render(
+    <SearchCityContextProvider>
+        <RouterProvider router={appRouter} />
+    </SearchCityContextProvider>
+);
