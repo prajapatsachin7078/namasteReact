@@ -2,15 +2,16 @@ import React from "react";
 import ShimmerLoader from "./ShimmerLoader";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import Category from "./Category";
 
 const Restaurant = () => {
     const { resId } = useParams();
     const [
         resMenuInfo,
-        resMenu,
+        categories
     ] = useRestaurantMenu(resId);
 
-    if (!resMenu && !resMenuInfo) {
+    if (!resMenuInfo) {
         return <ShimmerLoader />;
     }
 
@@ -30,7 +31,7 @@ const Restaurant = () => {
                                     <p className="card-text"><strong>Discount:</strong> {resMenuInfo.aggregatedDiscountInfo?.header}</p>
                                 </div>
                             </div>
-                            <div className="col-md-4 float-end" style={{ height: "250px", objectFit: 'contain' }}>
+                            <div className="col-md-4 float-end" style={{ objectFit: 'contain' }}>
                                 <img
                                     style={{ height: "250px" }}
                                     src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${resMenuInfo.cloudinaryImageId}`}
@@ -42,6 +43,13 @@ const Restaurant = () => {
                     </div>
                 </div>
             )}
+            <div className="accordion" id="accordionExample">
+                {categories && categories.map((item, index) => (
+
+                    <Category key={index} item = {item}/>
+                
+                ))}
+            </div>
         </div>
     );
 };

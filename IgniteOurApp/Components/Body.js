@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { CardContainer } from "./CardContainer";
 import ShimmerLoader from "./ShimmerLoader";
 import useRestaurantList from "../utils/useRestaurantList";
@@ -8,13 +8,13 @@ import useSearchCityRes from "../utils/useSearchCityRes";
 const Body = () => {
   const { cityName } = useContext(SearchCityContext); // Get cityName from context
   const coordinates = useSearchCityRes(cityName); // Get coordinates for the cityName
-  const [searchText, setSearchText, filterTopRatedRestaurants, filterData, filteredData] = useRestaurantList(coordinates);
+  const [searchText, setSearchText, filterTopRatedRestaurants, filterData,isFiltered, filteredData] = useRestaurantList(coordinates);
 
   return (
     <div className="container">
       <div className="d-flex row justify-content-center my-3">
         <button className="btn col-sm-6 col-md-4 btn-outline-secondary" onClick={filterTopRatedRestaurants}>
-          Click here to filter for top-rated restaurants
+          {isFiltered ? "Show All Restaurants" : "Top-rated restaurants"}
         </button>
         <form className="d-flex ms-3 col-sm-6 col-md-4" role="search">
           <input
