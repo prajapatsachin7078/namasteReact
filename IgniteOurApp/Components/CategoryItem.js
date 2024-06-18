@@ -1,7 +1,7 @@
 import React from 'react'
 
 function CategoryItem({info}) {
-    const {imageId, name,description, price, defaultPrice,ratings} = info;
+    const {imageId, name,description, price, defaultPrice,ratings, cloudinaryImageId} = info;
     const {rating, ratingCount} = ratings?.aggregatedRating;
 
   return (
@@ -9,7 +9,7 @@ function CategoryItem({info}) {
         <div className="row">
         <div className="col-md-3 position-relative">
           <img
-            src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${imageId}`}
+            src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${imageId || cloudinaryImageId}`}
             className="img-fluid w-100 rounded-start"
             alt="dish-image"
             style={{ objectFit: 'cover', height: '200px', overflow: 'hidden' }}

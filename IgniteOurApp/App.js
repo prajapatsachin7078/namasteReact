@@ -19,7 +19,7 @@ import SearchCityContextProvider from "./utils/context/SearchCityContextProvider
 const Grocery = lazy(()=>import("./Components/Grocery"));
 const AppLayout = () => {
     return (
-        <div className="container">
+        <div className="container-fluid">
             <Header />
             <Outlet />
             <Footer />

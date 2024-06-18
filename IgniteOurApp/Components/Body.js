@@ -11,7 +11,7 @@ const Body = () => {
   const [searchText, setSearchText, filterTopRatedRestaurants, filterData,isFiltered, filteredData] = useRestaurantList(coordinates);
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="d-flex row justify-content-center my-3">
         <button className="btn col-sm-6 col-md-4 btn-outline-secondary" onClick={filterTopRatedRestaurants}>
           {isFiltered ? "Show All Restaurants" : "Top-rated restaurants"}

@@ -3,7 +3,7 @@ export const ItemCard = (props) => {
     const { slaString } = sla;
     const truncatedCuisines = cuisines.slice(0, 4);
     return (
-        <div className="card">
+        <div className="">
             <div className="ratio ratio-4x3">
                 <img 
                     className="card-img-top" 
