@@ -20,6 +20,7 @@ export const ItemCard = (props) => {
                 <p className="card-text">Delivery in - {slaString}</p>
             </div>
         </div>
+        
     );
 };
 

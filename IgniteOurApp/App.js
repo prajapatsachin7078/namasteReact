@@ -12,6 +12,9 @@ import ShimmerLoader from "./Components/ShimmerLoader";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import SearchCityContextProvider from "./utils/context/SearchCityContextProvider";
+import { Provider } from "react-redux";
+import appStore from "./utils/redux/appStore";
+import CartList from "./Components/CartList";
 
 
 // import Grocery from "./Components/Grocery";
@@ -55,6 +58,7 @@ const appRouter = createBrowserRouter(
             <Route path="" element ={<Body />}/>
             <Route path="/about" element ={<About />}/>
             <Route path="/contact" element ={<Contact />}/>
+            <Route path="/cart" element ={<CartList />}/>
             <Route path="/restaurant/:resId" element ={<Restaurant />}/>
             <Route path="/grocery" element = {<Suspense fallback={<ShimmerLoader/>}>
                 <Grocery/>
@@ -65,7 +69,9 @@ const appRouter = createBrowserRouter(
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <SearchCityContextProvider>
-        <RouterProvider router={appRouter} />
-    </SearchCityContextProvider>
+    <Provider store={appStore}>
+        <SearchCityContextProvider>
+            <RouterProvider router={appRouter} />
+        </SearchCityContextProvider>
+    </Provider>
 );

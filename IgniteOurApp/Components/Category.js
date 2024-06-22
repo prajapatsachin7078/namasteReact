@@ -8,11 +8,19 @@ function Category(props) {
     const collapseId = title.replace(/[^a-zA-Z]/g, " ").split(" ")[0]+'1' +itemCards.length;
   return (
     
-        <div className="accordion-item bg-light">
+        <div className="accordion-item">
             <h2 className="accordion-header">
-            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#${collapseId}`}aria-expanded="true" aria-controls={collapseId}>
-                {title} ({itemCards.length})
-            </button>
+                <button 
+                    className="fw-bold accordion-button focus-none border-0" 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target={`#${collapseId}`} 
+                    aria-expanded="true" 
+                    aria-controls={collapseId}
+                    style={{ outline: "none", boxShadow: "none" }}
+                >
+                    {title} ({itemCards.length})
+                </button>
             </h2>
             <div id={collapseId} className="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div className="accordion-body">

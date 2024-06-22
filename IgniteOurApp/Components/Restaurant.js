@@ -19,9 +19,9 @@ const Restaurant = () => {
         <div className="container w-75 mt-5">
             {resMenuInfo && (
                 <div className="mb-4">
-                    <div style={{ height: "250px" }} className="card mb-3">
+                    <div className="card mb-3">
                         <div className="row g-0">
-                            <div className="col-md-8">
+                            <div className="col-lg-8 col-md-7 col-sm-12">
                                 <div className="card-body">
                                     <h5 className="card-title">{resMenuInfo.name}</h5>
                                     <p className="card-text"><strong>Location:</strong> {resMenuInfo.locality}, {resMenuInfo.areaName}</p>
@@ -31,11 +31,11 @@ const Restaurant = () => {
                                     <p className="card-text"><strong>Discount:</strong> {resMenuInfo.aggregatedDiscountInfo?.header}</p>
                                 </div>
                             </div>
-                            <div className="col-md-4 float-end" style={{ objectFit: 'contain' }}>
+                            <div className="col-lg-4 col-md-5 pe-2 col-sm-12 d-flex align-items-center justify-content-center">
                                 <img
-                                    style={{ height: "250px" }}
+                                    style={{ height: "200px", width: "200px", objectFit: 'cover' }}
                                     src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${resMenuInfo.cloudinaryImageId}`}
-                                    className="img-thumbnail float-end"
+                                    className="img-fluid rounded-circle shadow"
                                     alt={resMenuInfo.name}
                                 />
                             </div>
@@ -45,9 +45,7 @@ const Restaurant = () => {
             )}
             <div className="accordion" id="accordionExample">
                 {categories && categories.map((item, index) => (
-
-                    <Category key={index} item = {item}/>
-                
+                    <Category key={index} item={item} />
                 ))}
             </div>
         </div>
